@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "chip8/chip8.h"
+#include <assert.h>
 
 void test_memory()
 {
@@ -19,10 +20,19 @@ void test_registers()
   std::cout << chip8.stack.pop() << std::endl;
 }
 
+void test_keyboard()
+{
+  Chip8 chip8;
+  chip8.keyboard.down(0x0f);
+  assert(chip8.keyboard.is_pressed(0x0f));
+  chip8.keyboard.up(0x0f);
+  assert(!chip8.keyboard.is_pressed(0x0f));
+  printf("%x\n", chip8.keyboard.map_key(0x08));
+}
+
 int main(int argc, char *argv[])
 {
   Chip8 chip8;
-  test_registers();
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,
@@ -40,6 +50,29 @@ int main(int argc, char *argv[])
 	SDL_PollEvent(&event);
 	if (event.type == SDL_QUIT)
 	  break;
+	switch (event.type)
+	{
+	  case SDL_KEYDOWN:
+	  {
+		int key = chip8.keyboard.map_key(event.key.keysym.sym);
+		if (key != -1)
+		{
+		  chip8.keyboard.down(key);
+		}
+	  }
+		break;
+	  case SDL_KEYUP:
+	  {
+		int key = chip8.keyboard.map_key(event.key.keysym.sym);
+		if (key != -1)
+		{
+		  chip8.keyboard.up(key);
+		}
+	  }
+		break;
+	  default:
+		break;
+	}
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
