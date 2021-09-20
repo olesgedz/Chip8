@@ -5,6 +5,7 @@
 #pragma once
 #ifndef INC_8BITEMU_SOURCES_CHIP8_REGISTERS_H_
 #define INC_8BITEMU_SOURCES_CHIP8_REGISTERS_H_
+#include <cstring>
 #include "config.h"
 class Registers {
 
@@ -13,6 +14,10 @@ class Registers {
   {
 	stack_pointer = 0;
 	program_counter = 0;
+	i = 0;
+	delay_timer = 0;
+	sound_timer = 0;
+	memset(v, 0, sizeof(unsigned char) * CHIP8_TOTAL_DATA_REGISTERS);
   }
   unsigned short  get_pc() const;
   unsigned char  get_sp() const;

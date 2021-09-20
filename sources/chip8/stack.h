@@ -9,6 +9,7 @@
 class Stack {
  public:
   Stack(Registers &registers);
+
   unsigned short stack[CHIP8_TOTAL_STACK_DEPTH];
 
   void push(unsigned short val);

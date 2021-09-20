@@ -8,6 +8,8 @@
 
 Stack::Stack(Registers &registers) : registers(registers) {
 
+  memset(stack, 0, sizeof(unsigned short) * CHIP8_TOTAL_STACK_DEPTH);
+
 }
 
 void Stack::push(unsigned short val) {

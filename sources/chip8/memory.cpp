@@ -4,7 +4,13 @@
 
 #include "memory.h"
 #include <assert.h>
+#include <iostream>
 #include "config.h"
+
+Memory::Memory() {
+  memset(memory, 0, sizeof(unsigned char) * CHIP8_MEMORY_SIZE);
+  memcpy(memory, default_character_set, sizeof(default_character_set) * sizeof(char));
+}
 
 unsigned char Memory::get(int index) const {
   check_bounds(index); // not sure can be too slow

@@ -9,17 +9,16 @@
 #include "registers.h"
 #include "stack.h"
 #include "keyboard.h"
+#include "screen.h"
 
 class Chip8 {
  public:
   Memory 	memory;
   Registers registers;
   Stack		stack;
-  Keyboard keyboard;
-
-  Chip8() : stack(registers)
-  {
-  }
+  Keyboard 	keyboard;
+  Screen	screen;
+  Chip8();
 
 };
 

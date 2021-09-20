@@ -33,6 +33,7 @@ void test_keyboard()
 int main(int argc, char *argv[])
 {
   Chip8 chip8;
+  chip8.screen.set(0,0);
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,
@@ -75,13 +76,25 @@ int main(int argc, char *argv[])
 	}
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_Rect r;
-	r.x = 0;
-	r.y = 0;
-	r.w = 40;
-	r.h = 40;
-	SDL_RenderDrawRect(renderer, &r);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+	for (int y = 0; y < CHIP8_HEIGHT; y++)
+	{
+	  for (int x = 0; x < CHIP8_WIDTH; x++)
+	  {
+		if (chip8.screen.get(x, y))
+		{
+		  SDL_Rect r;
+		  r.x = x * CHIP8_WINDOW_MULTIPLIER;
+		  r.y = y * CHIP8_WINDOW_MULTIPLIER;
+		  r.w = CHIP8_WINDOW_MULTIPLIER;
+		  r.h = CHIP8_WINDOW_MULTIPLIER;
+		  SDL_RenderFillRect( renderer, &r);
+		  SDL_RenderDrawRect(renderer, &r);
+		}
+
+	  }
+	}
+
 	SDL_RenderPresent(renderer);
   }
 
