@@ -31,12 +31,33 @@ void test_keyboard()
   printf("%x\n", chip8.keyboard.map_key(0x08));
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+//  if (argc < 2) {
+//	std::cout << "usage: ./8bitemu rom" << std::endl;
+//	return -1;
+//  }
+
+  FILE* f = fopen("resources/INVADERS", "rb");
+  if (!f) {
+	std::cout << "fail to open" << std::endl;
+	return -1;
+  }
+  fseek(f, 0, SEEK_END);
+  long  size = ftell(f);
+  fseek(f, 0, SEEK_SET);
+
+  char* buf = new char [size];
+  int res = fread(buf, size, 1, f);
+  if (res != 1) {
+	std::cout << "fail to open" << std::endl;
+	return -1;
+  }
+
+
   Chip8 chip8;
+  chip8.load(buf, size);
 
   chip8.screen.draw_sprite(62,30, &chip8.memory.memory[0x00], 5);
-  chip8.registers.sound_timer = 30;
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,

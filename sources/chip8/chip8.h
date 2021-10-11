@@ -19,7 +19,8 @@ class Chip8 {
   Keyboard 	keyboard;
   Screen	screen;
   Chip8();
-
+  void exec(unsigned short opcode);
+  void load(const char* buf, size_t size);
 };
 
 #endif //INC_8BITEMU_SOURCES_CHIP8_CHIP8_H_
