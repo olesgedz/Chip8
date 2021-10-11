@@ -22,7 +22,7 @@ bool Screen::get(int x, int y) {
   return pixels[x + y * CHIP8_WIDTH];
 }
 
-bool Screen::draw_sprite(int x, int y, const unsigned char *sprite, int num) {
+bool Screen::draw_sprite(int x, int y, const  char *sprite, int num) {
   bool pixel_collision = false;
   for (int ly = 0; ly < num; ly++) {
 	char c = sprite[ly];
@@ -37,4 +37,8 @@ bool Screen::draw_sprite(int x, int y, const unsigned char *sprite, int num) {
 	}
   }
   return pixel_collision;
+}
+
+void Screen::clear() {
+  memset(pixels, 0, sizeof pixels);
 }

@@ -25,3 +25,9 @@ void Memory::set(int index, unsigned char val) {
 void Memory::check_bounds(int index) const {
   assert(index >= 0 && index < CHIP8_MEMORY_SIZE);
 }
+
+unsigned short Memory::get_short(int index) {
+  unsigned char byte1 = get(index);
+  unsigned char byte2 = get(index + 1);
+  return byte1 << 8 | byte2;
+}

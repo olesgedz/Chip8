@@ -11,7 +11,7 @@ class Memory {
  public:
   Memory();
 
-  unsigned char memory[CHIP8_MEMORY_SIZE];
+   char memory[CHIP8_MEMORY_SIZE];
   constexpr static unsigned char default_character_set[] = {
 	  0xF0, 0x90, 0x90, 0x90, 0xF0,                 // 0
 	  0x20, 0x60, 0x20, 0x20, 0x70,					// 1
@@ -35,7 +35,7 @@ class Memory {
   void set(int index, unsigned char val);
   unsigned char get(int index) const;
   const unsigned char *GetMemory() const;
-
+  unsigned short get_short(int index);
  private:
  	inline void check_bounds(int index) const;
 	 void set_characters_memory();

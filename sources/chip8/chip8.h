@@ -21,6 +21,8 @@ class Chip8 {
   Chip8();
   void exec(unsigned short opcode);
   void load(const char* buf, size_t size);
+ private:
+  void exec_ext(unsigned short opcode);
 };
 
 #endif //INC_8BITEMU_SOURCES_CHIP8_CHIP8_H_

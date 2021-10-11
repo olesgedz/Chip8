@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
   Chip8 chip8;
   chip8.load(buf, size);
 
-  chip8.screen.draw_sprite(62,30, &chip8.memory.memory[0x00], 5);
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,
@@ -78,12 +77,12 @@ int main(int argc, char *argv[]) {
   {
 	current_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 	delta_time = current_time - last;
-	if (sleep = true) {
-	  if (delta_time < 100)
-		continue;
-	  sleep = false;
-	  last = current_time;
-	}
+//	if (sleep = true) {
+//	  if (delta_time < 100)
+//		continue;
+//	  sleep = false;
+//	  last = current_time;
+//	}
 	SDL_PollEvent(&event);
 	if (event.type == SDL_QUIT)
 	  break;
@@ -134,12 +133,16 @@ int main(int argc, char *argv[]) {
 	if (chip8.registers.delay_timer > 0) {
 	  chip8.registers.delay_timer--;
 	  sleep = true;
+	  SDL_Delay(100);
 	}
 	if (chip8.registers.sound_timer > 0) {
 	  //Beep() no idea
 //	  Beep(8000, 100 * chip8.registers.sound_timer ); //doesnt work for resons
 	  chip8.registers.sound_timer = 0;
 	}
+	unsigned short opcode = chip8.memory.get_short(chip8.registers.program_counter);
+	chip8.registers.program_counter += 2;
+	chip8.exec(opcode);
   }
   SDL_DestroyWindow(window);
   SDL_Quit();

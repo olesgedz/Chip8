@@ -28,9 +28,10 @@ class Registers {
   unsigned char sound_timer;
   unsigned short program_counter;
   unsigned char stack_pointer;
- private:
   unsigned char v[CHIP8_TOTAL_DATA_REGISTERS]; // restrict vF
   unsigned short i;
+ private:
+
 };
 
 #endif //INC_8BITEMU_SOURCES_CHIP8_REGISTERS_H_
