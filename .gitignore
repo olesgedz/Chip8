@@ -9,3 +9,6 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+/8bitemu.ilk
+/8bitemu.pdb
+/8bitemu.exe

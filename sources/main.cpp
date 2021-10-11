@@ -33,7 +33,9 @@ void test_keyboard()
 int main(int argc, char *argv[])
 {
   Chip8 chip8;
-  chip8.screen.set(0,0);
+
+  chip8.screen.draw_sprite(62,30, &chip8.memory.memory[0x00], 5);
+
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,

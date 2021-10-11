@@ -13,7 +13,7 @@ class Screen {
   bool pixels[CHIP8_HEIGHT * CHIP8_WIDTH];
   void set(int x, int y);
   bool get(int x, int y);
-
+  bool draw_sprite(int x, int y, const unsigned char* sprite, int num);
 };
 
 #endif //INC_8BITEMU_SOURCES_CHIP8_SCREEN_H_
