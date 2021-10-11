@@ -24,11 +24,11 @@ class Registers {
   void sp_add() { stack_pointer++;};
   void sp_dec() { stack_pointer--;};
 
+  unsigned char delay_timer;
+  unsigned char sound_timer;
  private:
   unsigned char v[CHIP8_TOTAL_DATA_REGISTERS]; // restrict vF
   unsigned short i;
-  unsigned char delay_timer;
-  unsigned char sound_timer;
   unsigned short program_counter;
   unsigned char stack_pointer;
 };

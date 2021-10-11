@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "chip8/chip8.h"
 #include <assert.h>
+#include <chrono>
 
 void test_memory()
 {
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
   Chip8 chip8;
 
   chip8.screen.draw_sprite(62,30, &chip8.memory.memory[0x00], 5);
-
+  chip8.registers.sound_timer = 30;
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Window *window = SDL_CreateWindow(
 	  EMULATOR_WINDOW_TITLE,
@@ -48,8 +49,20 @@ int main(int argc, char *argv[])
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
   SDL_Event event;
 
+  uint64_t  delta_time = 0;
+  uint64_t current_time = 0;
+  uint64_t last = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+  bool  sleep = false;
   while (1)
   {
+	current_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	delta_time = current_time - last;
+	if (sleep = true) {
+	  if (delta_time < 100)
+		continue;
+	  sleep = false;
+	  last = current_time;
+	}
 	SDL_PollEvent(&event);
 	if (event.type == SDL_QUIT)
 	  break;
@@ -96,12 +109,18 @@ int main(int argc, char *argv[])
 
 	  }
 	}
-
 	SDL_RenderPresent(renderer);
+	if (chip8.registers.delay_timer > 0) {
+	  chip8.registers.delay_timer--;
+	  sleep = true;
+	}
+	if (chip8.registers.sound_timer > 0) {
+	  //Beep() no idea
+//	  Beep(8000, 100 * chip8.registers.sound_timer ); //doesnt work for resons
+	  chip8.registers.sound_timer = 0;
+	}
   }
-
   SDL_DestroyWindow(window);
   SDL_Quit();
-
   return 0;
 }
