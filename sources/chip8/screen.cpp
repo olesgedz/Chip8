@@ -30,7 +30,10 @@ bool Screen::draw_sprite(int x, int y, const unsigned char *sprite, int num) {
 	  if ((c & (0b10000000 >> lx)) == 0) {
 		continue;
 	  }
-	  pixels[((lx + x) % CHIP8_WIDTH)+ ((((ly + y) % CHIP8_HEIGHT) * CHIP8_WIDTH))] = true; // wrapping
+	  if (pixels[((lx + x) % CHIP8_WIDTH) + ((((ly + y) % CHIP8_HEIGHT) * CHIP8_WIDTH))]) {
+		pixel_collision = true;
+	  }
+	  pixels[((lx + x) % CHIP8_WIDTH)+ ((((ly + y) % CHIP8_HEIGHT) * CHIP8_WIDTH))] ^= true; // wrapping
 	}
   }
   return pixel_collision;
