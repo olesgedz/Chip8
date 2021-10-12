@@ -1,3 +1,6 @@
 [submodule "resources/chip8-test-rom"]
 	path = resources/chip8-test-rom
 	url = https://github.com/corax89/chip8-test-rom.git
+[submodule "lib/SDL"]
+	path = lib/SDL
+	url = https://github.com/libsdl-org/SDL.git
