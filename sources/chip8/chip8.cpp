@@ -95,7 +95,7 @@ void Chip8::exec_ext(unsigned short opcode) {
 		  tmp =  registers.v[x] + registers.v[y];
 		  registers.v[0x0f] = false;
 		  if (tmp > 0xff) {
-
+			registers.v[0x0f] = true;
 		  }
 		  registers.v[x] = tmp;
 		  break;
@@ -120,7 +120,7 @@ void Chip8::exec_ext(unsigned short opcode) {
 //		  Set Vx = Vx SHL 1. Then Vx is multiplied by 2
 		case 0x0E:
 		  registers.v[0x0f] = registers.v[x] & 0b10000000;
-		  registers.v[x] *= 2;
+		  registers.v[x] = registers.v[x] * 2;
 		  break;
 	  };
 	  break;
@@ -183,6 +183,48 @@ void Chip8::exec_ext(unsigned short opcode) {
 			c = keyboard.map_key(event.key.keysym.sym);
 		  }
 		  registers.v[x] = c;
+		}
+		  break;
+//		  Set delay timer = Vx.
+		case 0x15: {
+		  registers.delay_timer = registers.v[x];
+		}
+		  break;
+//		  Set sound timer = Vx.
+		case 0x18: {
+		  registers.sound_timer = registers.v[x];
+		}
+		  break;
+//		  Set I = I + Vx.
+		case 0x1E: {
+		  registers.i += registers.v[x];
+		}
+		  break;
+//		 Set I = location of sprite for digit Vx.
+		case 0x29: {
+		  registers.i = registers.v[x] * CHIP8_DEFAULT_SPRITE_HEIGHT;
+		}
+		  break;
+//		  Store BCD representation of Vx in memory locations I, I+1, and I+2.
+		case 0x33: {
+		  unsigned  char hundreds = registers.v[x] / 100;
+		  unsigned  char tens = registers.v[x] / 10 % 10;
+		  unsigned  char units = registers.v[x] % 10;
+		  memory.memory[registers.i] = hundreds;
+		  memory.memory[registers.i + 1] = tens;
+		  memory.memory[registers.i + 2] = units;
+		}
+		  break;
+//		  Store registers V0 through Vx in memory starting at location I.
+		case 0x55: {
+			for (int i = 0; i <= x; i++)
+			  memory.set(registers.i + i, registers.v[i]);
+		}
+		  break;
+//		  Read registers V0 through Vx from memory starting at location I.
+		case 0x65: {
+		  for (int i = 0; i <= x; i++)
+			registers.v[i] = memory.get(registers.i + i);
 		}
 		  break;
 	  }

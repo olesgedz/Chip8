@@ -32,12 +32,12 @@ void test_keyboard()
 }
 
 int main(int argc, char *argv[]) {
-//  if (argc < 2) {
-//	std::cout << "usage: ./8bitemu rom" << std::endl;
-//	return -1;
-//  }
+  if (argc < 2) {
+	std::cout << "usage: ./8bitemu rom" << std::endl;
+	return -1;
+  }
 
-  FILE* f = fopen("resources/INVADERS", "rb");
+  FILE* f = fopen(argv[1], "rb");
   if (!f) {
 	std::cout << "fail to open" << std::endl;
 	return -1;
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
 	if (chip8.registers.delay_timer > 0) {
 	  chip8.registers.delay_timer--;
 	  sleep = true;
-	  SDL_Delay(100);
+	  SDL_Delay(10);
 	}
 	if (chip8.registers.sound_timer > 0) {
 	  //Beep() no idea

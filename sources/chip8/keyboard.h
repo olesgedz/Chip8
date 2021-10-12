@@ -13,7 +13,7 @@ class Keyboard {
   bool  keyboard[CHIP8_TOTAL_KEYS];
   const char keyboard_map[CHIP8_TOTAL_KEYS] = {
 	  SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4,
-	  0x05, 0x06, 0x07, 0x08, 0x09,
+	  SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9,
 	  SDLK_a, SDLK_b, SDLK_c, SDLK_d, SDLK_e, SDLK_f
   };
   int	map_key(char key);
