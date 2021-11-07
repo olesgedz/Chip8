@@ -8,8 +8,6 @@
 
 Reference: [Wikipedia](https://en.wikipedia.org/wiki/CHIP-8)
 
->"WALO" is from the tagalog word of the number 8.
-
 # Game samples
 
 <img src="https://github.com/olesgedz/Chip8/blob/master/resources/screenshots/Screenshot%202021-10-12%20085935.png?raw=false">
