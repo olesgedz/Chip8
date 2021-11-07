@@ -43,7 +43,7 @@ Reference: [Wikipedia](https://en.wikipedia.org/wiki/CHIP-8)
   </tr>
 </table>
 
-> This is the key mappings of the chip-walo, use keyboard to control.
+> This is the key mappings of the chip, use keyboard to control.
 
 # Building from source
 
