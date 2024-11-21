@@ -4,6 +4,8 @@
 
 #include "keyboard.h"
 #include <assert.h>
+#include <iostream>
+#include <ostream>
 
 static void keyboard_in_bounce(int key)
 {
@@ -21,12 +23,15 @@ int Keyboard::map_key(char key) {
   }
   return -1;
 }
+
 void Keyboard::down(int key) {
   keyboard[key] = true;
 }
+
 void Keyboard::up(int key) {
   keyboard[key] = false;
 }
+
 bool Keyboard::is_pressed(int key) const {
   return keyboard[key];
 }

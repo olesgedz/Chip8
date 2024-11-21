@@ -73,19 +73,18 @@ int main(int argc, char *argv[]) {
   uint64_t current_time = 0;
   uint64_t last = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
   bool  sleep = false;
-  while (1)
+  bool running = true;	
+  while (running)
   {
 	current_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-	delta_time = current_time - last;
-//	if (sleep = true) {
-//	  if (delta_time < 100)
-//		continue;
-//	  sleep = false;
-//	  last = current_time;
-//	}
+
 	SDL_PollEvent(&event);
 	if (event.type == SDL_QUIT)
-	  break;
+	{
+		running = false;
+		break;
+	}
+  	
 	switch (event.type)
 	{
 	  case SDL_KEYDOWN:
@@ -95,10 +94,13 @@ int main(int argc, char *argv[]) {
 		{
 		  chip8.keyboard.down(key);
 		}
+	  	if (event.key.keysym.sym == SDLK_ESCAPE)
+	  		running = false;
 	  }
 		break;
 	  case SDL_KEYUP:
 	  {
+	  		// std::cout << "Key up: " << event.key.keysym.sym << std::endl;
 		int key = chip8.keyboard.map_key(event.key.keysym.sym);
 		if (key != -1)
 		{
@@ -132,12 +134,12 @@ int main(int argc, char *argv[]) {
 	SDL_RenderPresent(renderer);
 	if (chip8.registers.delay_timer > 0) {
 	  chip8.registers.delay_timer--;
-	  sleep = true;
+	  // sleep = true;
 	  SDL_Delay(10);
 	}
 	if (chip8.registers.sound_timer > 0) {
 	  //Beep() no idea
-//	  Beep(8000, 100 * chip8.registers.sound_timer ); //doesnt work for resons
+     // Beep(8000, 100 * chip8.registers.sound_timer ); //doesnt work for resons
 	  chip8.registers.sound_timer = 0;
 	}
 	unsigned short opcode = chip8.memory.get_short(chip8.registers.program_counter);
